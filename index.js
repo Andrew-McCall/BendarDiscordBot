@@ -9,8 +9,6 @@ function chain_message_features(features, index, message, client){
     return features[index](client, message, () => chain_message_features(features, index+1, message, client))
 }
 
-console.log(MESSAGE_FEATURES)
-
 const message_features = []
 for (const f of MESSAGE_FEATURES){
     message_features.push(require(f).message)
