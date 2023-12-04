@@ -1,7 +1,14 @@
+
+function isNaughty(text) {
+
+    return text.includes("fag") || text.includes("faggot") || text.includes("nigg") 
+
+}
+
 function message(_client, message, next){
 
-    if (message.content.toLowerCase().replace(" ", "").includes("faggot")) {
-        message.reply("You're one to talk, your mum has no arms or legs and sleeps in a pillow case!\nPAHAHAHAHAHAHAHA").then(() => {
+    if (isNaughty(message.content.toLowerCase().replace(" ", "").replace("1", "i").replace("0", "o"))) {
+        message.reply("You're one to talk, your mum has no arms or legs and sleeps in a pillow case!").then(() => {
             message.delete()
         })
     }

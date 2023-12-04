@@ -44,7 +44,7 @@ async function runCompletion(message) {
 }
 
 function message(client, message, next){
-  if (WHITELIST.includes(message.channelId.toString()) && (message.mentions.has(client.user) || Math.random() < 0.05) || message.content.includes("1180582121568481292")) {
+      if (WHITELIST.includes(message.channelId.toString()) && (message.mentions.has(client.user) || Math.random() < 0.8 || message.content.includes("1180582121568481292"))) {
 
         if (message.author.id.toString() == "954186589272154214") {
             message.reply(alex[Math.floor(Math.random() * alex.length)])
@@ -63,10 +63,10 @@ function message(client, message, next){
 
         runCompletion(message)
         limit += 1;
-    }else{
-        next(message)
+        return
     }
-
+    
+    next()
 }
 
 module.exports = { message } 
