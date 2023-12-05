@@ -7,14 +7,20 @@ function isNaughty(text) {
 
 function message(_client, message, next) {
 
-    if (isNaughty(message.content.toLoweriCase().replace(" ", "").replace("1", "i").replace("0", "o"))) {
+    if (isNaughty(message.content.toLowerCase().replace(" ", "").replace("1", "i").replace("0", "o"))) {
         message.reply("Naughty Naughty <@"+message.author.id+">...\nNow you can't speak for 5 minutes!").then(() => {
             message.delete()
         })
         
         let member = message.member
         if (member && message.guildId == TEA_TIME_SERVER_ID) {
-            member.timeout(5*60*1000, "Said a naughty word!") 
+            console.log("Timedout: " + message.author.tag)
+            try{
+                member.timeout(5*60*1000, "Said a naughty word!")
+            }catch(error){
+                console.log("Couldn't timeout")
+            }
+             
         }
     }
     else {
