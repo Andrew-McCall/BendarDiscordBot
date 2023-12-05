@@ -1,16 +1,16 @@
 // https://discord.com/api/oauth2/authorize?client_id=1180582121568481292&permissions=8&scope=bot+applications.commands
-const { TOKEN, MESSAGE_FEATURES } = require("./secrets.json")
+const { TOKEN, MESSAGE_FEATURES, SETUP_FEATURES } = require("./secrets.json")
 const { Client, Events, GatewayIntentBits } = require('discord.js');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMessages] });
 
-function chain_message_features(features, index, message, client){
-    if (index >= features.length) return () => {};
-    return features[index](client, message, () => chain_message_features(features, index+1, message, client))
+function chain_message_features(features, index, message, client) {
+    if (index >= features.length) return () => { };
+    return features[index](client, message, () => chain_message_features(features, index + 1, message, client))
 }
 
 const message_features = []
-for (const f of MESSAGE_FEATURES){
+for (const f of MESSAGE_FEATURES) {
     message_features.push(require(f).message)
 }
 
@@ -22,6 +22,12 @@ client.on(Events.MessageCreate, message => {
 
 client.once(Events.ClientReady, readyClient => {
     console.log(`Ready! Logged in as ${readyClient.user.tag}`);
+
+    for (const f of SETUP_FEATURES) {
+        require(f).setup(client)
+    }
+
+
 });
 
 client.login(TOKEN)
