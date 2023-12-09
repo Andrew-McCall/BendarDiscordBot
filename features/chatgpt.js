@@ -60,7 +60,7 @@ function message(client, message, next){
             message.reply("Fuck Off!")
             return
         }
-
+        message.content = message.content.replace("1180582121568481292", "Bendar")
         runCompletion(message)
         limit += 1;
         return
